@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=Firefox FTL Protocol Handler
+Name=FTL Handler
 Exec=sh -c 'firefox $(echo %u | sed "s/^ftls:/https:/;s/^ftl:/http:/")'
 Terminal=false
 Type=Application
