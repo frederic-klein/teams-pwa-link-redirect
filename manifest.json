@@ -1,0 +1,13 @@
+{
+    "manifest_version": 3,
+    "name": "Link Opener",
+    "version": "1.0",
+    "description": "Open links in the default browser",
+    "permissions": [
+      "declarativeNetRequest"
+    ],
+    "host_permissions": ["<all_urls>"],
+    "background": {
+      "service_worker": "background.js"
+    }
+  }
