@@ -13,7 +13,7 @@ chrome.runtime.onInstalled.addListener(() => {
         condition: { 
           regexFilter: "^(http)(s?://.*)",
           resourceTypes: ["main_frame"],
-          excludedRequestDomains: ["teams.microsoft.com"],
+          excludedRequestDomains: ["teams.microsoft.com", "login.microsoftonline.com"],
         },
       },
     ],
