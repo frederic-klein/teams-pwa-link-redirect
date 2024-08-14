@@ -23,3 +23,24 @@ This little experiment introduces two new schemes for (ftl and ftls for **f**ire
 xdg-mime default firefox-ftl.desktop x-scheme-handler/ftl
 xdg-mime default firefox-ftl.desktop x-scheme-handler/ftls
 ```
+
+#### Bypassing the `Open FTL Handler` Prompts
+
+Chrome may display an "Open FTL Handler" prompt, which can only be permanently accepted per-domain.
+
+Potential fix here: https://superuser.com/a/1588146
+
+```bash
+sudo bash
+mkdir -p /etc/opt/chrome/policies/{managed,recommended}
+cat <<EOF >/etc/opt/chrome/policies/managed/allow_tel_protocol.json
+{
+  "URLWhitelist": [
+    "tel:*"
+  ],
+  "URLAllowlist": [
+    "tel:*"
+  ]
+}
+EOF
+```
