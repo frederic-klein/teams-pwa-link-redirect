@@ -36,10 +36,10 @@ mkdir -p /etc/opt/chrome/policies/{managed,recommended}
 cat <<EOF >/etc/opt/chrome/policies/managed/allow_tel_protocol.json
 {
   "URLWhitelist": [
-    "tel:*"
+    "ftl:*", "ftls:*", 
   ],
   "URLAllowlist": [
-    "tel:*"
+    "ftl:*", "ftls:*", 
   ]
 }
 EOF
