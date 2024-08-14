@@ -5,7 +5,7 @@ We still want to use firefox as our default browser without maintaining active l
 
 ## How does it work?
 
-This little experiment introduces two new schemes for (ftl and ftls for **f**irefox **t**eams **l**inks) and an browser extension for chrome. Clicked links in the Teams PWA are opened in Chrome and the extension modifies https to flts and http to flt, which causes Chrome to prompt for approval to open the `FTL Handler`. The FTL Handler is defined by the `firefox-ftl.desktop` file, which reverts the http/https replacement and opens the links in firefox. 
+This little experiment introduces two new schemes for (ftl and ftls for **f**irefox **t**eams **l**inks) and an browser extension for chrome (works for edge as well). Clicked links in the Teams PWA are opened in Chrome and the extension modifies https to flts and http to flt, which causes Chrome to prompt for approval to open the `FTL Handler`. The FTL Handler is defined by the `firefox-ftl.desktop` file, which reverts the http/https replacement and opens the links in firefox.
 
 ## Installation
 
@@ -24,23 +24,48 @@ xdg-mime default firefox-ftl.desktop x-scheme-handler/ftl
 xdg-mime default firefox-ftl.desktop x-scheme-handler/ftls
 ```
 
-#### Bypassing the `Open FTL Handler` Prompts
+### Bypassing the `Open FTL Handler` Prompts
 
 Chrome may display an "Open FTL Handler" prompt, which can only be permanently accepted per-domain.
 
-Potential fix here: https://superuser.com/a/1588146
+You can define a policy to accept the custom protocol using the following command based on https://superuser.com/a/1588146
+
+#### chrome
 
 ```bash
 sudo bash
 mkdir -p /etc/opt/chrome/policies/{managed,recommended}
-cat <<EOF >/etc/opt/chrome/policies/managed/allow_tel_protocol.json
+cat <<EOF >/etc/opt/chrome/policies/managed/allow_ftl_protocol.json
 {
   "URLWhitelist": [
-    "ftl:*", "ftls:*", 
+    "ftl:*", "ftls:*",
   ],
   "URLAllowlist": [
-    "ftl:*", "ftls:*", 
+    "ftl:*", "ftls:*",
   ]
 }
 EOF
 ```
+
+#### edge
+
+```bash
+sudo bash
+mkdir -p /etc/opt/edge/policies/{managed,recommended}
+cat <<EOF >/etc/opt/edge/policies/managed/allow_ftl_protocol.json
+{
+  "URLWhitelist": [
+    "ftl:*", "ftls:*",
+  ],
+  "URLAllowlist": [
+    "ftl:*", "ftls:*",
+  ]
+}
+EOF
+```
+
+## Contributors
+
+Thanks to the following contributors for improving this helper ♡
+
+* Ryan Cole https://github.com/ryanc-me
