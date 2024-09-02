@@ -47,6 +47,23 @@ cat <<EOF >/etc/opt/chrome/policies/managed/allow_ftl_protocol.json
 EOF
 ```
 
+#### chromium
+
+```bash
+sudo bash
+mkdir -p /etc/chromium/policies/{managed,recommended}
+cat <<EOF >/etc/chromium/policies/managed/allow_ftl_protocol.json
+{
+  "URLWhitelist": [
+    "ftl:*", "ftls:*",
+  ],
+  "URLAllowlist": [
+    "ftl:*", "ftls:*",
+  ]
+}
+EOF
+```
+
 #### edge
 
 ```bash
