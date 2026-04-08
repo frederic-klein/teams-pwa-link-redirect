@@ -17,6 +17,7 @@ chrome.runtime.onInstalled.addListener(() => {
             "teams.microsoft.com",
             "login.microsoftonline.com",
             "outlook.office.com",
+            "outlook.office365.com",
           ],
         },
       },
