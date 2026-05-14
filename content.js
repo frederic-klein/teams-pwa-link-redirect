@@ -23,5 +23,9 @@ document.addEventListener("click", (e) => {
   e.stopPropagation();
 
   const ftlUrl = url.replace(/^https:/, "ftls:").replace(/^http:/, "ftl:");
-  window.location.href = ftlUrl;
+  const iframe = document.createElement("iframe");
+  iframe.style.display = "none";
+  iframe.src = ftlUrl;
+  document.body.appendChild(iframe);
+  setTimeout(() => document.body.removeChild(iframe), 1000);
 }, true);
