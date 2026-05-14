@@ -27,5 +27,5 @@ document.addEventListener("click", (e) => {
   iframe.style.display = "none";
   iframe.src = ftlUrl;
   document.body.appendChild(iframe);
-  setTimeout(() => document.body.removeChild(iframe), 1000);
+  setTimeout(() => iframe.remove(), 1000);
 }, true);

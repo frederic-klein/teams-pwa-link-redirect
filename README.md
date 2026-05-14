@@ -5,7 +5,11 @@ We still want to use firefox as our default browser without maintaining active l
 
 ## How does it work?
 
-This little experiment introduces two new schemes for (ftl and ftls for **f**irefox **t**eams **l**inks) and an browser extension for chrome (works for edge as well). Clicked links in the Teams PWA are opened in Chrome and the extension modifies https to flts and http to flt, which causes Chrome to prompt for approval to open the `FTL Handler`. The FTL Handler is defined by the `firefox-ftl.desktop` file, which reverts the http/https replacement and opens the links in firefox.
+This little experiment introduces two new schemes for (ftl and ftls for **f**irefox **t**eams **l**inks) and an browser extension for chrome (works for edge as well). Clicked links in the Teams PWA are opened in Chrome and the extension modifies https to ftls and http to ftl, which causes Chrome to prompt for approval to open the `FTL Handler`. The FTL Handler is defined by the `firefox-ftl.desktop` file, which reverts the http/https replacement and opens the links in firefox.
+
+Links to `teams.microsoft.com`, `login.microsoftonline.com`, `outlook.office.com` and `outlook.office365.com` (and their subdomains) are left alone so that internal Teams navigation and sign-in flows keep working inside the PWA.
+
+To avoid dropping an active Teams call when a link is clicked, the redirect is triggered via a short-lived hidden iframe instead of navigating the top-level document.
 
 ## Installation
 
@@ -86,3 +90,4 @@ EOF
 Thanks to the following contributors for improving this helper ♡
 
 * Ryan Cole https://github.com/ryanc-me
+* Freubert https://github.com/Freubert — fix for Teams calls being dropped when clicking a link (hidden-iframe redirect, [#12](https://github.com/frederic-klein/teams-pwa-link-redirect/pull/12))

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Link Opener",
-  "version": "1.1",
+  "version": "1.1.1",
   "description": "Open links in the default browser",
   "content_scripts": [
     {
