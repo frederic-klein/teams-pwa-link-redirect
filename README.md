@@ -14,6 +14,7 @@ To avoid dropping an active Teams call when a link is clicked, the redirect is t
 ## Installation
 
 1. clone this repo `git clone git@github.com:frederic-klein/teams-pwa-link-redirect.git`
+1. install the handler script: `sudo install -m 755 ubuntu/ftl-open /usr/local/bin/ftl-open`
 1. make the firefox-ftl.desktop file available in your system: `sudo cp ubuntu/firefox-ftl.desktop /usr/share/applications/`
 1. install the chrome extension
     1. open chrome

@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=FTL Handler
-Exec=sh -c 'firefox "$(echo "%u" | sed "s/^ftls:/https:/;s/^ftl:/http:/")"'
+Exec=/usr/local/bin/ftl-open %u
 Terminal=false
 Type=Application
 MimeType=x-scheme-handler/ftl;x-scheme-handler/ftls;
