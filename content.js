@@ -7,9 +7,11 @@ document.addEventListener("click", (e) => {
 
   const excludedDomains = [
     "teams.microsoft.com",
+    "teams.cloud.microsoft",
     "login.microsoftonline.com",
     "outlook.office.com",
-    "outlook.office365.com"
+    "outlook.office365.com",
+    "outlook.cloud.microsoft"
   ];
 
   try {
