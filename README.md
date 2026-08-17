@@ -29,6 +29,19 @@ xdg-mime default firefox-ftl.desktop x-scheme-handler/ftl
 xdg-mime default firefox-ftl.desktop x-scheme-handler/ftls
 ```
 
+## Upgrading from a version before the `ftl-open` handler script
+
+Earlier versions handled the scheme rewrite with an inline shell pipeline in `firefox-ftl.desktop`. That interpolated the clicked URL into a shell command string, so a crafted `ftl:`/`ftls:` URL could execute arbitrary commands as your user ([#14](https://github.com/frederic-klein/teams-pwa-link-redirect/pull/14)). Any page you visited could trigger it.
+
+If you installed before that fix, an already-copied `.desktop` file in `/usr/share/applications/` is still the vulnerable one — pulling the repo alone changes nothing. Install the script and overwrite the old handler:
+
+```BASH
+sudo install -m 755 ubuntu/ftl-open /usr/local/bin/ftl-open
+sudo cp ubuntu/firefox-ftl.desktop /usr/share/applications/
+```
+
+The two files must always be updated together; the `.desktop` file does nothing without the script.
+
 ### Bypassing the `Open FTL Handler` Prompts
 
 Chrome may display an "Open FTL Handler" prompt, which can only be permanently accepted per-domain.

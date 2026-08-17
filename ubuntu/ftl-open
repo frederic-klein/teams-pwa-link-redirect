@@ -3,5 +3,6 @@ u="$1"
 case "$u" in
   ftls:*) u="https:${u#ftls:}" ;;
   ftl:*)  u="http:${u#ftl:}" ;;
+  *) echo "ftl-open: unsupported URL" >&2; exit 1 ;;
 esac
 exec firefox "$u"
