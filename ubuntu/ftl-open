@@ -1,0 +1,7 @@
+#!/bin/sh
+u="$1"
+case "$u" in
+  ftls:*) u="https:${u#ftls:}" ;;
+  ftl:*)  u="http:${u#ftl:}" ;;
+esac
+exec firefox "$u"
