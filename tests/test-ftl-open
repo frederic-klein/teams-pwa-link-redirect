@@ -1,0 +1,47 @@
+#!/bin/sh
+# Tests for ubuntu/ftl-open. Stubs firefox via PATH so no browser launches.
+# Usage: tests/test-ftl-open
+
+set -u
+
+script_dir=$(cd "$(dirname "$0")" && pwd)
+ftl_open="$script_dir/../ubuntu/ftl-open"
+
+stub_dir=$(mktemp -d) || exit 1
+trap 'rm -rf "$stub_dir"' EXIT
+printf '#!/bin/sh\nprintf %%s "$1"\n' > "$stub_dir/firefox"
+chmod +x "$stub_dir/firefox"
+
+pass=0
+fail=0
+
+# check <name> <input-url> <expected-exit> <expected-firefox-arg>
+check() {
+  name="$1"; input="$2"; want_exit="$3"; want_arg="$4"
+  got_arg=$(PATH="$stub_dir:$PATH" "$ftl_open" "$input" 2>/dev/null)
+  got_exit=$?
+  if [ "$got_exit" = "$want_exit" ] && [ "$got_arg" = "$want_arg" ]; then
+    pass=$((pass + 1))
+  else
+    fail=$((fail + 1))
+    echo "FAIL: $name"
+    echo "  input:    [$input]"
+    echo "  expected: exit=$want_exit arg=[$want_arg]"
+    echo "  got:      exit=$got_exit arg=[$got_arg]"
+  fi
+}
+
+check "ftls rewrites to https"        "ftls://example.com/a?b=c" 0 "https://example.com/a?b=c"
+check "ftl rewrites to http"          "ftl://example.com"        0 "http://example.com"
+check "path-only form is kept"        "ftls:foo"                 0 "https:foo"
+check "bare ftls is rejected"         "ftls:"                    1 ""
+check "bare ftl is rejected"          "ftl:"                     1 ""
+check "empty argument is rejected"    ""                         1 ""
+check "other scheme is rejected"      "mailto:x@example.com"     1 ""
+check "https passthrough is rejected" "https://example.com"      1 ""
+check "shell metachars stay literal"  'ftls://example.com/$(id);`id`' 0 'https://example.com/$(id);`id`'
+check "option-like URL is rejected"   "-osint"                   1 ""
+check "prefix must anchor at start"   "xftls://example.com"      1 ""
+
+echo "$pass passed, $fail failed"
+[ "$fail" = 0 ]
